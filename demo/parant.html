@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">  
+    <title>iframe auto height</title>
+    <link rel="stylesheet" type="text/css" href="index.css">
+</head>
+
+<body>
+    <label>Parant Page</label>
+    <!-- iframe 子页面 -->
+    <iframe id="frame_content" src="../crossdomain/iframe.html" width="100%" height="400" frameborder="1" scrolling="no" style="background-color=transparent"></iframe>
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.8.3/jquery.js"></script>
+
+    <!-- 必须加载 message.js -->
+    <script type="text/javascript" src="../lib/message.js"></script>
+    
+    <script type="text/javascript">
+    // 高度自适应
+    // msg 为 iframe 高度
+    var messengerAutoHeight = new Messenger('parent', 'huishou');
+    messengerAutoHeight.listen(function(msg) {
+        if (msg) {
+            if (!(msg == "undefined")) {
+                $("#frame_content").attr("height", msg);
+            }
+        }
+    });
+
+    // 滚动条自动滚动
+    // msg 为滚动条距离顶部距离
+    var messagerAutoScroll = new Messenger('parent', 'huishou_scroll');
+    messagerAutoScroll.listen(function(msg) {
+        if (msg) {
+            if (!(msg == "undefined")) {
+                $("html,body").animate({
+                    "scrollTop": (parseInt(msg) + $("#frame_content").offset().top)
+                }, 500, "swing");
+            }
+        }
+    });
+    </script>
+</body>
+
+</html>
