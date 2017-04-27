@@ -1,10 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>iframe auto height</title>
-    <link rel="stylesheet" type="text/css" href="index.css">
+    <meta charset="UTF-8">  
+    <title>iframe auto height</title>    
+    <style type="text/css">
+        .block {
+            height: 800px;
+            width: 400px;
+            margin: 0 auto;
+            background: #666;
+        }
+    </style>
 </head>
 <body>
-    <iframe src="../crossdomain/index.html"></iframe>
+    <label>Child Page</label>
+    <button class="js-auto-height">点我自适应高度</button>
+    <button class="js-auto-scroll">点我滚动父级滚动条</button>
+    <div class="block"></div>
+    <script type="text/javascript" src="./lib/message.js"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.8.3/jquery.js"></script>
+    <script type="text/javascript">
+        $(".js-auto-height").on("click",function() {
+            var height = $("body").outerHeight();
+            var messenger = new Messenger('iframe', 'huishou');
+            messenger.addTarget(window.parent.parent, 'parent');
+            messenger.targets['parent'].send(height);    
+        })  
+
+        $(".js-auto-scroll").on("click",function() {
+            var scrollHeight = $("body").outerHeight();
+            var messenger = new Messenger('iframe', 'huishou_scroll');
+            messenger.addTarget(window.parent.parent, 'parent');
+            messenger.targets['parent'].send(scrollHeight);    
+        })        
+    </script>
 </body>
 </html>
