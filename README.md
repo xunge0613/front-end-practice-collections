@@ -13,27 +13,27 @@ Front End practice collections, including **Questions,  Answers, Demo and Soluti
 First, make yourself understood
 
 - what 
- - what is your expectation / purpose ? 
- - what is the possible reason ?
- - what concept / knowledge is related ? 
- - what is the difference between current workspace and last commit ?
- - what does the log info mean ? 
+  - what is your expectation / purpose ? 
+  - what is the possible reason ?
+  - what concept / knowledge is related ? 
+  - what is the difference between current workspace and last commit ?
+  - what does the log info mean ? 
 
 Else, make PC / Internet understood
 
-where
-- official documentation
-- google 
-- stackoverflow / quora
-- forums
-- W3C standards / MDN
+- where
+ - official documentation
+ - google 
+ - stackoverflow / quora
+ - forums
+ - W3C standards / MDN
 
 
 Last chance, make Other guys understood
 
-who
-- chat groups guys
-- colleague / schoolmate
+- who
+ - chat groups guys
+ - colleague / schoolmate
 
 
 ### how to ask a question ?
