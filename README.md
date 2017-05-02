@@ -22,18 +22,18 @@ First, make yourself understood
 Else, make PC / Internet understood
 
 - where
- - official documentation
- - google 
- - stackoverflow / quora
- - forums
- - W3C standards / MDN
+  - official documentation
+  - google 
+  - stackoverflow / quora
+  - forums
+  - W3C standards / MDN
 
 
 Last chance, make Other guys understood
 
 - who
- - chat groups guys
- - colleague / schoolmate
+  - chat groups guys
+  - colleague / schoolmate
 
 
 ### how to ask a question ?
@@ -55,9 +55,17 @@ be respectful and ask in brief
 
 ## Category 
 
+### Tittle Category
+
 Why ( & When & Where ): Occasion
+
 How: Constraints, Keyword, Trial
+
 What: Question, Answer, Demo, Solution, Tag 
+
+### Content Category
+
+iframe, DOM, js mobile api
 
 ## Questions Index
 
@@ -103,17 +111,17 @@ Trial:
 - Mutation Observer
 
 
-2 
+2 What is the best pratice on reusing Vue.js components lib between multi-website , eg: user-oriented 'front-end' website and  staff-oriented 'back-end' website, eg: ERP / CMS / OC / CRM ? 
 
 假设公司有面向普通用户的前端站点以及面向内部人员的后台管理系统，都使用vue全家桶，各自有一套vue组件库，希望维护一套两者的基础组件库，然后分别面向前端与后台进行各自扩展…… 跪求相关最佳实践 
 
 ## Change Log
 
-v0.0.2 Reconstruct Readme.md
+v 0.0.2 Reconstruct Readme.md
 
 - new feature: Methodology
 
-v0.0.1 Basic Version
+v 0.0.1 Basic Version
 
 ## License
 
