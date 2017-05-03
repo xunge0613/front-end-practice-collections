@@ -6,66 +6,9 @@
 
 Front End practice collections, including **Questions,  Answers, Demo and Solutions** , etc.
 
-## Methodology
+English | 简体中文
 
-### how to solve a  problem ?
-
-First, make yourself understood
-
-- what 
-  - what is your expectation / purpose ? 
-  - what is the possible reason ?
-  - what concept / knowledge is related ? 
-  - what is the difference between current workspace and last commit ?
-  - what does the log info mean ? 
-
-Else, make PC / Internet understood
-
-- where
-  - official documentation
-  - google 
-  - stackoverflow / quora
-  - forums
-  - W3C standards / MDN
-
-
-Last chance, make Other guys understood
-
-- who
-  - chat groups guys
-  - colleague / schoolmate
-
-
-### how to ask a question ?
-
-be respectful and ask in brief 
-
-- trial 
- - tech
- - method
- - consideration
-- demo
-- use case 
-- constraints
-- expectation / purose
-- actuality
-
-### how to note a solution ?
-
-
-## Category 
-
-### Tittle Category
-
-Why ( & When & Where ): Occasion
-
-How: Constraints, Keyword, Trial
-
-What: Question, Answer, Demo, Solution, Tag 
-
-### Content Category
-
-iframe, DOM, js mobile api
+----------
 
 ## Questions Index
 
@@ -92,6 +35,83 @@ Solution: Cross domain iframe auto height, control parent scrollbar
 
 `tag: iframe, cross domain, messenger.js, iframeC.html`
 
+------
+
+
+
+## Methodology
+
+### general tip
+
+- Always make sure what you see is *not a cached or outdated version * .
+
+### how to solve a  problem ?
+
+First, make yourself understood
+
+- what 
+  - what is your expectation / purpose ? 
+  - what is the possible reason ?
+  - what is the related concept / knowledge  ? 
+  - what is the difference between current workspace and last commit ?
+  - what does the log info mean ? 
+
+Else, make PC / Internet understood
+
+- where
+  - official documentation 
+  - google 
+  - stackoverflow / quora
+  - practice-note post , eg: like this repository : ) 
+  - forums
+  - W3C standards / MDN
+  - source code
+  - can i use ... ?
+
+
+Last chance, make other guys understood
+
+- who
+  - chat groups guys
+  - colleague / schoolmate
+
+
+### how to ask a question ?
+
+be respectful and ask in brief 
+
+- trial 
+  - tech
+  - method
+  - consideration
+- demo
+- use case 
+- constraints
+- expectation / purpose
+- actuality
+
+### how to note a solution ?
+
+To be done...
+
+## Tools
+
+
+
+## Category 
+
+### Tittle Category
+
+Why ( & When & Where ): Occasion
+
+How: Constraints, Keyword, Trial
+
+What: Question, Answer, Demo, Solution, Tag 
+
+### Content Category
+
+iframe, DOM, js mobile api
+
 
 
 ## To do list
@@ -114,6 +134,10 @@ Trial:
 2 What is the best pratice on reusing Vue.js components lib between multi-website , eg: user-oriented 'front-end' website and  staff-oriented 'back-end' website, eg: ERP / CMS / OC / CRM ? 
 
 假设公司有面向普通用户的前端站点以及面向内部人员的后台管理系统，都使用vue全家桶，各自有一套vue组件库，希望维护一套两者的基础组件库，然后分别面向前端与后台进行各自扩展…… 跪求相关最佳实践 
+
+## Reference
+
+
 
 ## Change Log
 
