@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test using DOMAttrModified</title>
+</head>
+<body>
+    NOTE: Chrome Not Supported http://caniuse.com/#search=DOMAttrModified
+    
+    考虑： http://www.cnblogs.com/jscode/p/3600060.html
+    <div id="box" title="123" style="height: 30px;width: 100px;">
+        
+    </div>
+    <button id="btn">修改特性</button>
+    <script>
+    var box = document.getElementById("box")
+    box.addEventListener('DOMAttrModified',handler);
+    function handler(e){
+        e = e || event;
+        box.innerHTML = e.type;
+    }
+    btn.onclick = function(){
+        box.setAttribute('title','abc');
+    }
+</script>
+</body>
+</html>
