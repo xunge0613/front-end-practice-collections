@@ -74,7 +74,7 @@ Last chance, make other guys understood
 - who
   - chat groups guys
   - colleague / schoolmate
-
+  - warm-hearted friends
 
 ### how to ask a question ?
 
@@ -129,11 +129,17 @@ Trial:
 
 - [del]DOMAttrModified[/del]
 - Mutation Observer
-
+- hack solution, listen click event on document, for most height changes results from click event
 
 2 What is the best pratice on reusing Vue.js components lib between multi-website , eg: user-oriented 'front-end' website and  staff-oriented 'back-end' website, eg: ERP / CMS / OC / CRM ? 
 
 假设公司有面向普通用户的前端站点以及面向内部人员的后台管理系统，都使用vue全家桶，各自有一套vue组件库，希望维护一套两者的基础组件库，然后分别面向前端与后台进行各自扩展…… 跪求相关最佳实践 
+
+3 0.5px problem 
+https://zhuanlan.zhihu.com/p/26701978
+
+4 如何实现
+
 
 ## Reference
 
