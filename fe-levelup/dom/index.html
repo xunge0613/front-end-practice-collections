@@ -17,10 +17,31 @@
             <a href="#"></a>
             <a href="#" class="class"></a>
         </div>
+        <h2>问题记录：</h2>
+        <dl>
+            <dt>问题1：起初想每一次查询的结果，作为下一次查询的范围，结果发现 getElementById 只允许在 document 下使用；</dt>
+            <dd>于是对于限定范围的 id 选择器，改为遍历其子元素。</dd>
+            <dt>问题2：接着遇到第二个问题，HTMLCollection 无法通过 forEach 进行遍历</dt>
+            <dd>于是找到解决方案是，使用 ES6 的 Array.from()，将其转化为可迭代值</dd>
+            <dt>问题3：再接下来思考，如何在给定集合范围内（HTMLCollection）继续查询 getElementByClassName 或者 getElementByTagName， 而无论查询条件如何，都应当是基于某个 HTMLElement，而非 HTMLCollection；</dt>
+            <dd>于是需要遍历 HTMLCollection，并将每一次查询的结果汇总在一起</dd>
+            <dt>问题4：新问题，对于集合匹配情况，可能存在多个 HTMLCollection,且有重复项，需要进行去重处理</dt>
+            <dd>要做到去重，首先要判重，如何判断两个元素是否是相同的？</dd>
+            <dd>没有在文档里找到相应的属性，能够独立地标识一个元素（https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement）</dd>
+            <dd>暂时想到的办法是，手动给已经遍历到的元素，加上一个标记，表示当前元素已匹配到，下一次遍历到的时候就不再记录。而查询结束后去掉标记</dd>
+        </dl>  
+        <h2>知识点记录：</h2>     
+        <ul>
+            <li>数组方法：Array.from()、array.forEach()、</li>
+            <li>字符串方法：string.substr()、string.includes()、</li>
+            <li>HTML Element 方法：removeAttribute()、getAttribute()、setAttribute()</li>
+            <li>注意：getElementById 的特殊性</li>
+        </ul>
     </div>
 
     <script src="https://cdn.bootcss.com/babel-standalone/7.0.0-beta.3/babel.min.js"></script>    
     <script>
+                
         // @param: string
         // @return: DOM element
         var $ = function(str) {
