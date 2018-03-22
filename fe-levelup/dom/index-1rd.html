@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DOM selector</title>
+</head>
+<body>
+    <h1>DOM selector</h1>
+    <div id="id">
+        <div id="id-2"></div>
+        <div class="class">
+            <a href="#"></a>
+            <a href="#"></a>
+        </div>
+    </div>
+
+    <script src="https://cdn.bootcss.com/babel-standalone/7.0.0-beta.3/babel.min.js"></script>    
+    <script>
+        // @param: string
+        // @return: DOM element
+        var $ = function(str) {
+            // validate input 
+            if(str === '') {
+                return null;
+            }            
+
+            /*
+                process input string
+            */
+            
+            // group by `space`
+            var _str = str.split(" ");
+            var _context;
+
+            // map the str array 
+            // ps: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map
+            _str.forEach(element => {
+                // console.log(element,_context);
+                applySelector(element,_context);
+            });
+
+            // console.log(_str)
+        }
+
+        function applySelector(element,context) {
+            if(element === '') {
+                return '';
+            }
+
+            if(element.includes("#")) {
+                // `contains().`  was renamed to `includes()`
+                // ps:https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/includes
+
+                // 
+                // var _id = element.slice();
+                // str.slice(beginIndex[, endIndex])
+                // ps:https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/slice
+
+                var _id = element.substr(element.indexOf("#") + 1);
+                // str.substr(start[, length])
+                // ps:https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/substr
+                if(!context) {
+                    context = document.getElementById(_id)
+                } else {
+                    context = context.getElementById(_id);                   
+                }                
+            } else if(element.includes(".")) {
+                var _class = element.substr(element.indexOf(".") + 1);
+                // str.substr(start[, length])
+                // ps:https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/substr
+                if(!context) {
+                    context = document.getElementsByClassName(_class)
+                } else {
+                    context = context.getElementsByClassName(_class);                   
+                }                
+            } else {
+                var _tag = element.substr(element.indexOf(".") + 1);
+                // str.substr(start[, length])
+                // ps:https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/substr
+                if(!context) {
+                    context = document.getElementsByTagName(_tag)
+                } else {
+                    context = context.getElementsByTagName(_tag);                   
+                }      
+            }
+
+            console.log(context)
+            return context;
+        }
+
+        $("#id");
+        $("#id #id-2");
+        $("#id .class");
+        $("#id .class a");
+
+
+        //
+    </script>
+</body>
+</html>
