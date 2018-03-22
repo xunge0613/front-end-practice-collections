@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DOM selector</title>
+</head>
+<body>
+    <h1>DOM selector</h1>
+    <div id="id">
+        <div id="id-2">
+            <a href="#"></a>
+        </div>
+        <div class="class">
+            <a href="#"></a>
+            <a href="#"></a>
+            <a href="#" class="class"></a>
+        </div>
+    </div>
+
+    <script src="https://cdn.bootcss.com/babel-standalone/7.0.0-beta.3/babel.min.js"></script>    
+    <script>
+        // @param: string
+        // @return: DOM element
+        var $ = function(str) {
+            // validate input 
+            if(str === '') {
+                return null;
+            }            
+
+            /*
+                process input string
+            */
+            
+            // group by `space`
+            var _str = str.split(" ");
+            var _context;
+
+            // ps: 一开始想用 map 来遍历，但考虑到每一次遍历的返回值与数组元素的关联不大，于是直接用 forEach
+            // map the str array [Changed to array.forEach]
+            // ps: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map
+            _str.forEach(element => {
+                // console.log(element,_context);
+                _context = applySelector(element,_context);                
+            });
+
+
+            console.log(_context,_context.length)
+        }
+
+        function applySelector(element,context) {
+            if(element === '') {
+                return '';
+            }
+
+            if(element.includes("#")) {
+                // `contains().`  was renamed to `includes()`
+                // ps:https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/includes
+
+                // 最初的代码：var _id = element.slice();
+                // ps: 一开始我想用 slice 来切割字符串，后来发现用 substr 用起来更简洁，读起来更直观                
+                // str.slice(beginIndex[, endIndex])
+                // ps:https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/slice
+
+                var _id = element.substr(element.indexOf("#") + 1);
+                // str.substr(start[, length])
+                // ps:https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/substr
+                if(!context) {
+                    context = document.getElementById(_id)
+                } else {             
+                    // 最初的代码：context = context.getElementById(_id);          
+                    // 会报错，id 只能通过 document 去查询，原因是 id 是唯一的，无需借助中间查询结果
+                    // https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementById#Notes                    
+                    
+                    if(context.length > 1) {
+                        // 多个集合的情况
+                        var _contextList = [];
+                        Array.from(context).forEach( ctx =>  {                            
+                            // 每次给新匹配到的元素打上已匹配到的标记     
+                            // ps: https://developer.mozilla.org/en-US/docs/Web/API/Element/setAttribute
+                            var ele = findChildId(_id,ctx);    
+                            if(ele && ele.getAttribute("_hasMatched") !== "y") {
+                                ele.setAttribute("_hasMatched","y");
+                                _contextList.push(ele);
+                                console.log(ele,_id,ctx)
+                            }                                               
+                        });
+
+                        _contextList.forEach(ele => {
+                            ele.removeAttribute("_hasMatched");
+                        });
+                        
+                        return _contextList;
+                    } else {
+                        context = findChildId(_id,context)  
+                    }
+                }                
+            } else if(element.includes(".")) {
+                var _class = element.substr(element.indexOf(".") + 1);            
+                if(!context) {
+                    context = document.getElementsByClassName(_class)
+                } else {
+                    
+                    if(context.length > 1) {
+                        // 多个集合的情况
+                        var _contextList = [];
+                        Array.from(context).forEach( ctx =>  {
+                            Array.from(ctx.getElementsByClassName(_class)).forEach( ele =>  {                              
+                                if(ele.getAttribute("_hasMatched") !== "y") {
+                                    ele.setAttribute("_hasMatched","y");
+                                    _contextList.push(ele);
+                                }       
+                            });     
+                        });
+
+                        _contextList.forEach(ele => {
+                            ele.removeAttribute("_hasMatched");
+                        });
+                        
+                        return _contextList;
+                    } else {
+                        context = context.getElementsByClassName(_class);  
+                    }                 
+                }                
+            } else {
+                var _tag = element;               
+                if(!context) {
+                    context = document.getElementsByTagName(_tag)
+                } else {
+                    if(context.length > 1) {
+                        // 多个集合的情况
+                        var _contextList = [];
+                        Array.from(context).forEach( ctx =>  {
+                            Array.from(ctx.getElementsByTagName(_tag)).forEach( ele =>  {                             
+                                if(ele.getAttribute("_hasMatched") !== "y") {
+                                    ele.setAttribute("_hasMatched","y");
+                                    _contextList.push(ele);
+                                }             
+                            });              
+                        });
+
+                        _contextList.forEach(ele => {
+                            ele.removeAttribute("_hasMatched");
+                        });
+                        
+                        return _contextList;
+                    } else {
+                        context = context.getElementsByTagName(_tag);
+                    }                                       
+                }      
+            }
+
+            // console.log(context)
+            return context;
+        }
+
+       
+        function findChildId(id,context) {
+            var _children = context.getElementsByTagName("*");
+            var _matchedFlag = false;
+            Array.from(_children).forEach( element =>  {
+                // note: 对于 nodelist 直接用 forEach 会报错，需要 hack 一下（借助于 array.from()
+                // https://stackoverflow.com/questions/22754315/for-loop-for-htmlcollection-elements
+                if(element.id === id) {
+                    context = element;
+                    _matchedFlag = true;
+                    return;
+                }
+            });
+            // console.log(_children);
+            if(_matchedFlag) {
+                return context;
+            } else {
+                return null;
+            }
+            
+        }
+
+        // 第一版代码
+        //$("#id"); OK 
+        //$("#id #id-2"); ERROR
+        //$("#id .class"); ERROR
+        //$("#id .class a"); ERROR
+
+
+        // 第二版代码
+        // $("#id #id-2"); OK
+        $("div a");
+        $("div .class")
+        $("div #id-2")
+
+        // 小结：
+        //      问题1：起初想每一次查询的结果，作为下一次查询的范围，结果发现 getElementById 只允许在 document 下使用；
+        //  于是对于限定范围的 id 选择器，改为遍历其子元素。
+        //
+        //      问题2：接着遇到第二个问题，HTMLCollection 无法通过 forEach 进行遍历
+        //  于是找到解决方案是，使用 ES6 的 Array.from()，将其转化为可迭代值
+        //
+        //      问题3：再接下来思考，如何在给定集合范围内（HTMLCollection）继续查询 getElementByClassName 或者 getElementByTagName，
+        //  而无论查询条件如何，都应当是基于某个 HTMLElement，而非 HTMLCollection；       
+        //  于是需要遍历 HTMLCollection，并将每一次查询的结果汇总在一起
+        //
+        //      问题4：新问题，对于集合匹配情况，可能存在多个 HTMLCollection,且有重复项，需要进行去重处理
+        //  要做到去重，首先要判重，如何判断两个元素是否是相同的？
+        //  没有在文档里找到相应的属性，能够独立地标识一个元素（https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement）
+        //  暂时想到的办法是，手动给已经遍历到的元素，加上一个标记，表示当前元素已匹配到，下一次遍历到的时候就不再记录。而查询结束后去掉标记
+    </script>
+</body>
+</html>
