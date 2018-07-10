@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>jquery 通用弹窗</title>
+  <style>
+    .popup-wrap {
+      position: fixed;
+      left: 0;
+      top: 0%;
+      width: 100%;
+      height: 100%;
+      display: none;      
+     
+    }
+    .popup-wrap.show {
+      display: block;    
+    }
+    .content {
+      background: url(http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg) no-repeat center center;
+      width: 200px;
+      height: 200px;      
+      position: relative;
+    }
+
+    .popup-content {
+      display: inline-block;
+      vertical-align: middle;
+      width: 98%;
+      text-align: center;
+    }
+    .popup-wrap:after {
+      display: inline-block;
+      vertical-align: middle;
+      content: '';
+      height: 100%; 
+    }
+    .popup-content img {
+      width: 80%;
+    }
+
+    .popup-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: white;
+      height: 30px;
+      width: 30px;
+    }
+  </style>
+
+</head>
+
+<body>
+  <main>
+    <div class="content">
+      <div class="popup-btn" data-popid="test1"></div>
+    </div>
+  </main>
+  <aside>
+    <div class="popup-wrap test1">
+      <div class="popup-content">
+          <img src="http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg" alt="">
+      </div>
+    </div>
+  </aside>
+
+
+  <script src="https://cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
+  <script>
+    $(function() {
+      $(".popup-btn").on("click",function() {
+        var popid = $(this).data("popid");
+        $("." + popid).addClass("show");
+      })
+
+      $(".popup-wrap").on("click",function() {        
+        $(".popup-wrap").removeClass("show");
+      })
+    });
+  </script>  
+</body>
+</html>
