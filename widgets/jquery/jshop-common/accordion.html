@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>jquery 手风琴效果</title>
+  <style>
+    .accordion-item.show .accordion-content {
+      display: block;
+    }
+
+    .accordion-item .accordion-content {
+      display: none;
+    }
+
+    .accordion-item {
+      padding: 12px 0;
+    }
+
+    .accordion-item + .accordion-item {
+      border-top: 1px solid rgba(235,235,235,1);
+    }
+
+    .accordion-title {
+      color: #333;
+      font-size:15px;
+      line-height:25px;
+      position: relative;
+    }
+
+    .accordion-title .icon-arrow {
+      position: absolute;
+      width: 12px;
+      height: 6px;
+      right: 0;
+      top: 0;      
+      background: red;   
+    }
+
+    .accordion-item.show .accordion-title .icon-arrow {
+      background: blue;
+    }
+
+    .accordion-content {
+      font-size:15px;
+      line-height:25px;
+      margin-top: 10px;
+      color: #999;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div class="accordion-wrap">
+    <div class="accordion-item show">
+      <div class="accordion-title">1.为什么选择拍拍回收？<div class="icon-arrow"></div></div>
+      <div class="accordion-content">为什么选择拍拍回收 为什么选择拍拍回收为什么选择拍拍回收 为什么选择拍拍回收。</div>
+    </div>
+    <div class="accordion-item">
+      <div class="accordion-title">2.为什么选择拍拍回收？<div class="icon-arrow"></div></div>
+      <div class="accordion-content">为什么选择拍拍回收 为什么选择拍拍回收为什么选择拍拍回收 为什么选择拍拍回收。</div>
+    </div>
+    <div class="accordion-item">
+      <div class="accordion-title">3.为什么选择拍拍回收？<div class="icon-arrow"></div></div>
+      <div class="accordion-content">为什么选择拍拍回收 为什么选择拍拍回收为什么选择拍拍回收 为什么选择拍拍回收。</div>
+    </div>
+    <div class="accordion-item">
+      <div class="accordion-title">4.为什么选择拍拍回收？<div class="icon-arrow"></div></div>
+      <div class="accordion-content">为什么选择拍拍回收 为什么选择拍拍回收为什么选择拍拍回收 为什么选择拍拍回收。</div>
+    </div>
+  </div>
+
+
+  <script src="https://cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
+  <script>
+    $(function () {
+      $(".accordion-item").on("click", function () {
+        $(this).toggleClass("show");
+      })
+    });
+  </script>
+</body>
+
+</html>
