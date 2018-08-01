@@ -112,7 +112,15 @@ What: Question, Answer, Demo, Solution, Tag
 
 iframe, DOM, js mobile api
 
+## Demos
 
+- [jQuery 移动端上拉切换屏幕](https://github.com/xunge0613/front-end-practice-collections/blob/master/widgets/jquery/detail-nav/index.html)
+- [jQuery 弹窗](https://github.com/xunge0613/front-end-practice-collections/blob/master/widgets/jquery/jshop-common/popup.html)
+- [jQuery 手风琴效果](https://github.com/xunge0613/front-end-practice-collections/blob/master/widgets/jquery/jshop-common/accordion.html)
+
+## Notes
+
+- [微信授权的几种方法简单小结](https://github.com/xunge0613/front-end-practice-collections/blob/master/fundamental/miniapp/auth.md)
 
 ## To do list
 
