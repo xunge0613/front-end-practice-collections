@@ -1,0 +1,4 @@
+- 微信授权
+	- 头像、昵称纯展示 -> open-data 无需授权
+	- openid -> wx.login() 静默获取
+	- 获取用户信息数据 -> button userinfo 引导用户手动点击按钮进行授权
