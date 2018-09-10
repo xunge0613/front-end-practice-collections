@@ -120,6 +120,7 @@ iframe, DOM, js mobile api
 
 ## Notes
 
+- [CORS 跨域小结](https://github.com/xunge0613/front-end-practice-collections/tree/master/fundamental/node/cross-origin)
 - [微信授权的几种方法简单小结](https://github.com/xunge0613/front-end-practice-collections/blob/master/fundamental/miniapp/auth.md)
 
 ## To do list
