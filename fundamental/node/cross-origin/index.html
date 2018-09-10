@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  hello world
+  <div id="output"></div>
+  <script>      
+      let url = 'http://localhost:8081/ajax'; // 跨域地址 8081 端口
+      // 访问 http://localhost:8080/index.html；测试各种情况      
+       
+      function callCrossDomain(options) {
+        let xhr = new XMLHttpRequest();
+        let method = options.method || 'GET';
+        if(xhr) {
+          xhr.open(method,options.url,true); 
+          if(options.headers && options.headers.length > 0) {
+            // 自定义头部
+            options.headers.forEach(ele => {
+              if(ele.key) {
+                xhr.setRequestHeader(ele.key,ele.value);
+              }              
+            });
+          }
+
+          if(options.withCredentials) {
+            xhr.withCredentials = options.withCredentials;
+          }
+
+          xhr.onreadystatechange = function() {
+            if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+              // demo 
+              console.log(xhr.responseText);
+              let node=document.createElement("p");
+              let textnode=document.createTextNode(xhr.responseText);
+              node.appendChild(textnode);
+              document.getElementById("output").appendChild(node);
+            }
+          };
+          xhr.send();
+        }
+      }      
+
+      // demo 1: 普通 ajax 请求
+      // setTimeout(function() {callCrossDomain({url})},200); 
+      callCrossDomain({url});
+      // Failed to load http://localhost:8081/ajax: No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'http://localhost:8080' is therefore not allowed access.
+      // Uncaught DOMException: Failed to execute 'send' on 'XMLHttpRequest': Failed to load 'http://localhost:8081/ajax'. 
+  
+      // demo 2: 正确的 CORS 处理
+      callCrossDomain({url: "http://localhost:8081/nocross"}); 
+      // Success 
+
+      // demo 3: CORS 处理： Access-Control-Allow-Origin
+      callCrossDomain({url: "http://localhost:8081/cross-origin"}); 
+      // index.html:24 Failed to load http://localhost:8081/cross-origin: The 'Access-Control-Allow-Origin' header has a value 'http://localhost' that is not equal to the supplied origin. Origin 'http://localhost:8080' is therefore not allowed access.
+      // 解决方案：将 Access-Control-Allow-Origin 的值设置为 http://localhost:8080；
+      // ps：如果指定了 Access-Control-Allow-Origin ，那么“协议”、“端口号”、“主机名”要完全一致
+
+      // demo 4：CORS 处理：非简单请求（需要 options 预检 preflight）
+      // 备注：之前的 demo 都是简单请求：GET、POST、HEAD
+      callCrossDomain({
+        url: "http://localhost:8081/cross-options",
+
+        // 1. Failed to load http://localhost:8081/cross-options: Method PUT is not allowed by Access-Control-Allow-Methods in preflight response.
+        method: 'PUT',         
+        headers: [
+          // 2 Failed to load http://localhost:8081/cross-options: Request header field TEST is not allowed by Access-Control-Allow-Headers in preflight response.
+          // {            
+          //   key: 'TEST',
+          //   value: 'XXX'
+          // },
+          // 3.1 Failed to load http://localhost:8081/cross-options: Request header field content-type is not allowed by Access-Control-Allow-Headers in preflight response.
+          // {            
+          //   key: 'Content-Type', 
+          //   value: 'application/json', // 改为 'text/plain'
+          // },
+          // 3.2 Failed to load http://localhost:8081/cross-options: Request header field Content-Type is not allowed by Access-Control-Allow-Headers in preflight response.
+          {            
+            key: 'content-type',
+            value: 'application/json', //           
+          },
+        ],                    
+      }); 
+
+      /** 
+       * 解决方案：
+       * 1. 服务端加上 "Access-Control-Allow-Methods" : "PUT,POST,GET,DELETE,OPTIONS",
+       * 2. 服务端加上 "Access-Control-Allow-Headers" : "TEST", 
+       * 3.1 服务端加上 "Access-Control-Allow-Headers" : "content-type", 
+       * 3.2 服务端加上 "Access-Control-Allow-Headers" : "content-type",  
+       **/
+      
+      /** 
+       * 解释：简单请求必须同时满足以下三种条件
+       * 1. 请求方法是GET、POST、HEAD其中任意一个
+       * 2. 必须是下面定义对CORS安全的首部字段集合，不能是集合之外的其他首部字段。 Accept、Accept-Language、Content-Language、Content-Type、DPR、Downlink、Save-Data、Viewport-Width、Width。 
+       * 3.1 Content-Type的值必须是text/plain、multipart/form-data、application/x-www-form-urlencoded中任意一个值
+       * 3.2 请求头的大小写不敏感，
+       **/
+      
+      // demo 5： 带 cookie 的 CORS 处理
+      callCrossDomain({
+        url: "http://localhost:8081/cross-cookie",
+        withCredentials: true,
+      }); 
+      // 1 Failed to load http://localhost:8081/cross-cookie: The value of the 'Access-Control-Allow-Origin' header in the response must not be the wildcard '*' 
+      // when the request's credentials mode is 'include'. Origin 'http://localhost:8080' is therefore not allowed access. 
+      // The credentials mode of requests initiated by the XMLHttpRequest is controlled by the withCredentials attribute.
+
+      // 2 index.html:1 Failed to load http://localhost:8081/cross-cookie: The value of the 'Access-Control-Allow-Credentials' header in the response is '' 
+      // which must be 'true' when the request's credentials mode is 'include'. 
+      // Origin 'http://localhost:8080' is therefore not allowed access. 
+      // The credentials mode of requests initiated by the XMLHttpRequest is controlled by the withCredentials attribute.
+
+      // 1 域名通配符 * 问题
+      // 解释：如要用 Access-Control-Allow-Origin 不能使用通配符 *，需要指定为请求来源的域名
+      // 解决方案： Access-Control-Allow-Origin： http://localhost:8080
+
+      // 2 服务端配置
+      // 解决方案：服务端配置 Access-Control-Allow-Credentials: true
+
+  </script>
+</body>
+</html>
