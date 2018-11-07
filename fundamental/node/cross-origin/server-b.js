@@ -1,3 +1,4 @@
+// 后端接口响应服务器
 const http = require("http");
 const fs = require("fs"); // 文件读取模块
 const url = require("url");
@@ -5,7 +6,7 @@ const file_path = require('path');
 
 
 // let documentRoot = 'C:/git-xx/front-end-practice-collections/fundamental/node/cross-origin';
-let documentRoot = file_path.dirname(__filename) + '/cross-origin.html';
+let documentRoot = file_path.dirname(__filename) + '/fakeaddress.html';
 // 文件目录地址
 
 let server = http.createServer(function(req,res) { 
@@ -29,9 +30,8 @@ let server = http.createServer(function(req,res) {
       console.log("ajax request received",path);
       res.writeHeader(200, {
         'content-type' : 'text/html; charset=UTF-8',
-        "Access-Control-Allow-Origin" :"http://localhost:8080",              
+        "Access-Control-Allow-Origin" :"http://localhost:8081",              
         "Access-Control-Allow-Methods" : "PUT,POST,GET,DELETE,OPTIONS",
-        //"X-Powered-By" :' 3.2.1',      
       });
       res.write(path + ' 跨域成功');
       res.end();
@@ -42,7 +42,6 @@ let server = http.createServer(function(req,res) {
       res.writeHeader(200, {
         'content-type' : 'text/html; charset=UTF-8',
         "Access-Control-Allow-Origin" :"*",    
-        //"X-Powered-By" :' 3.2.1',      
       });
       res.write(path + ' 跨域成功');
       res.end();

@@ -1,8 +1,12 @@
+// 前端页面访问服务器
 const http = require("http");
 const fs = require("fs"); // 文件读取模块
 const url = require("url");
+const file_path = require('path');
 
-let documentRoot = 'C:/git-xx/front-end-practice-collections/fundamental/node/cross-origin';
+let documentRoot = file_path.dirname(__filename);
+
+//'C:/git-xx/front-end-practice-collections/fundamental/node/cross-origin';
 // 文件目录地址
 
 let server1 = http.createServer(function(req,res) {
@@ -28,6 +32,7 @@ let server1 = http.createServer(function(req,res) {
             回调函数的一参为读取错误返回的信息，返回空就没有错误
             data为读取成功返回的文本内容
       */
+     console.log(file)
     if(err) {
       res.writeHeader(404, {
         'content-type' : 'text/html; charset=UTF-8'      
