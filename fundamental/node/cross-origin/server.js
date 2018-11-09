@@ -3,6 +3,7 @@ const http = require("http");
 const fs = require("fs"); // 文件读取模块
 const url = require("url");
 const file_path = require('path');
+const qs = require("querystring");
 
 let documentRoot = file_path.dirname(__filename);
 
@@ -19,12 +20,46 @@ let server1 = http.createServer(function(req,res) {
   //console.log(req);
   console.log(path,_url);
   if(path == "/ajax") {
+    // 当前域名下的 ajax 请求，未跨域
     console.log("ajax request received");
     let response_text = "response";
     res.writeHeader(200,{"Content-Type" : "text/plain"});
     res.end(response_text);
     console.log("string sent");
-  } else {    
+  } else if(path == '/proxy') {
+    // 后端调用其他域名接口，不跨域
+    let data = {
+      value: 'hello xx',  
+      time: new Date().getTime()
+    };
+    let content = qs.stringify(data);
+    let options = {
+      hostname: 'localhost',
+      port: 8081,
+      path: '/ajax?' + content,
+      method: 'GET'
+    }  
+  
+    let req = http.request(options, function (res2) {  
+      console.log('STATUS: ' + res2.statusCode);  
+      console.log('HEADERS: ' + JSON.stringify(res2.headers));  
+      res2.setEncoding('utf8');  
+      res2.on('data', function (chunk) {  
+        console.log('收到参数: ' + chunk);  
+        let response_text = chunk;
+        res.writeHeader(200,{"Content-Type" : "text/plain"});
+        res.end(response_text);
+      });  
+    });  
+      
+    req.on('error', function (e) {  
+      console.log('problem with request: ' + e.message);  
+    });  
+      
+    req.end();  
+  
+
+  }else {    
     fs.readFile(file, function(err,data) {
       /*
         err为文件路径
@@ -50,4 +85,4 @@ let server1 = http.createServer(function(req,res) {
   } 
 }).listen(8080);
 
-console.log('server1 started');
+console.log('server1 localhost:8080 started');

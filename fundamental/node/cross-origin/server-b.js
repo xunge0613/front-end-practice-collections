@@ -6,23 +6,25 @@ const file_path = require('path');
 
 
 // let documentRoot = 'C:/git-xx/front-end-practice-collections/fundamental/node/cross-origin';
-let documentRoot = file_path.dirname(__filename) + '/fakeaddress.html';
+let documentRoot = file_path.dirname(__filename);
 // 文件目录地址
 
 let server = http.createServer(function(req,res) { 
   // 客户端输入的 url
   // eg： localhost:8080/index.html，那么此处 url /index.html
   let path = url.parse(req.url).pathname; // 解析访问的路径
-  let file = documentRoot + path;
+  let file = documentRoot + req.url;
   
   //console.log(req);
   switch (path) {
+   
     case  "/ajax":
       // 跨域失败，未进行处理
-      console.log("ajax request received",path);
-      let response_text = "请求成功";
+      console.log(req)
+      console.log("ajax request received",req.url);
+      let response_text = `请求成功,请求地址：${req.url}`;
       res.writeHeader(200,{"Content-Type" : "text/plain"});
-      res.end(path + response_text);
+      res.end(response_text);
       console.log("response sent");
       break;
     case  "/cross-origin":

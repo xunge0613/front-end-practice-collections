@@ -79,7 +79,10 @@
   <h1>hello world</h1>
   <br><br>
   <div class="btn-wrap">
-    <button onclick="onButtonClick(1)">未跨域</button>
+    <button onclick="onButtonClick(0)">同域 ajax / nginx 代理</button>
+    <button onclick="onButtonClick(1)">跨域 ajax</button>
+    <button onclick="onButtonClick(1.5)">跨域 ajax，node 中间件代理</button>
+    <br><br>
     <button onclick="onButtonClick(2)">通配符允许跨域请求</button>
     <button onclick="onButtonClick(3)">普通跨域，限制域名</button>
     <button onclick="onButtonClick(4)">非简单请求跨域跨域</button>
@@ -140,7 +143,7 @@
       }
     }
 
-    let url = 'http://localhost:8080/ajax'; // 跨域地址 8081 端口
+    let url = '/ajax'; // 默认使用当前域名
 
     const onButtonClick = (btnId) => {
       let action = [...actions()].filter(([key]) => (key.btnId == btnId))
@@ -179,15 +182,28 @@
       }
     }
 
+
+
     const actions = () => {
       return new Map([
-        // demo 1: 普通 ajax 请求，未跨域
-        // setTimeout(function() {callCrossDomain({url})},200); 
+        // demo 0: 普通 ajax 请求，同域，未跨域        
+        [{
+          btnId: 0,
+          params: { url }
+        }],
+
+        // demo 1: 跨域 ajax 请求
         // Failed to load http://localhost:8081/ajax: No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'http://localhost:8080' is therefore not allowed access.
         // Uncaught DOMException: Failed to execute 'send' on 'XMLHttpRequest': Failed to load 'http://localhost:8081/ajax'. 
         [{
           btnId: 1,
-          params: { url }
+          params: { url: "http://localhost:8081/ajax" }
+        }],
+
+        // demo 1.5: 跨域 ajax 请求，服务端代理
+       [{
+          btnId: 1.5,
+          params: { url: "http://localhost:8080/proxy" }
         }],
 
         // demo 2: 普通跨域，通配符允许跨域
@@ -195,6 +211,7 @@
           btnId: 2,
           params: { url: "http://localhost:8081/nocross" }
         }],
+
         // Success 
 
         // demo 3: CORS 处理： Access-Control-Allow-Origin
@@ -274,8 +291,6 @@
 
         // 2 服务端配置
         // 解决方案：服务端配置 Access-Control-Allow-Credentials: true
-
-
       ])
     }
 

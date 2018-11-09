@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">  
+    <title>iframe auto height</title>    
+    <style>
+        .block {
+            height: 800px;
+            width: 400px;
+            margin: 0 auto;
+            background: #666;
+        }
+    </style>
+</head>
+<body>
+    <label>Child Page</label>
+    <button class="js-auto-height">页面自适应高度</button>
+    <button class="js-auto-scroll">滚动父级滚动条</button>
+    <button class="js-cross-domain-scroll">滚动父级滚动条（跨域被阻止）</button>
+    <div class="block"></div>
+    <script type="text/javascript" src="./lib/message.js"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.8.3/jquery.js"></script>
+    <script type="text/javascript">
+        $(".js-auto-height").on("click",function() {
+            var height = $("body").outerHeight();
+            var messenger = new Messenger('iframe', 'huishou');
+            messenger.addTarget(window.parent.parent, 'parent');
+            messenger.targets['parent'].send(height);    
+        })  
+
+        $(".js-auto-scroll").on("click",function() {
+            var scrollHeight = $("body").outerHeight();
+            var messenger = new Messenger('iframe', 'huishou_scroll');
+            messenger.addTarget(window.parent.parent, 'parent');
+            messenger.targets['parent'].send(scrollHeight);    
+        })  
+        
+        $(".js-cross-domain-scroll").on("click",function() {
+            window.parent.parent.scrollTo(999,999); // 移动父元素到 x 999 y 999 的位置
+        })
+    </script>
+</body>
+</html>

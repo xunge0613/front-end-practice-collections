@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">  
+    <title>window.name demo</title>
+    <style>
+        iframe {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+        <script type="text/javascript">
+            var state = 0, 
+            iframe = document.createElement('iframe'),
+            loadfn = function() {
+                if (state === 1) {
+                    var data = iframe.contentWindow.name;    // 读取 b 域名下 数据
+                    alert(data);    // 弹出 b 域名下的数据
+                    // 移除 iframe ，回收内存
+                    iframe.contentWindow.document.write('');
+                    iframe.contentWindow.close();
+                    document.body.removeChild(iframe);
+                } else if (state === 0) {
+                    // debugger;
+                    // 注：此时因跨域，无法获取到 iframe 内容
+                    state = 1;
+                    iframe.contentWindow.location = "http://localhost:8080/iframe/proxy.html";    // 设置的代理文件
+                }  
+            };
+            iframe.src = 'http://localhost:8081/iframe/b-data.html';
+            if (iframe.attachEvent) {
+                iframe.attachEvent('onload', loadfn);
+            } else {
+                iframe.onload  = loadfn;
+            }
+            document.body.appendChild(iframe);
+            // alert(iframe.contentWindow.name); 
+        </script>
+       
+</body>
+
+</html>
