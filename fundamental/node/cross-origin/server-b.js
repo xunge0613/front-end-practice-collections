@@ -43,7 +43,7 @@ let server = http.createServer(function(req,res) {
       console.log("ajax request received",path);
       res.writeHeader(200, {
         'content-type' : 'text/html; charset=UTF-8',
-        "Access-Control-Allow-Origin" :"*",    
+        //"Access-Control-Allow-Origin" :"*",    
       });
       res.write(path + ' 跨域成功');
       res.end();
@@ -66,6 +66,8 @@ let server = http.createServer(function(req,res) {
        res.writeHeader(200, {
          'content-type' : 'text/html; charset=UTF-8',
          "Access-Control-Allow-Origin" :"http://localhost:8080",  //    http://localhost:8080
+         "Access-Control-Allow-Origin" :"http://localhost:8081",  //    http://localhost:8080
+
          'Access-Control-Allow-Credentials': true,
          //"Access-Control-Allow-Headers": "with-credentials",
        });
