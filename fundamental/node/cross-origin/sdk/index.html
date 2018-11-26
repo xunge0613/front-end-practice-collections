@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>活动页</title>
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.8.3/jquery.js"></script>
+
+</head>
+
+<body>
+    <form action="http://staging-mock.aihuishou.com/mock/5bf656e1e51b711f54338fb0/sso/password-login" target="target"
+        method="POST">
+        <input name="title" type="text" class="misstion-title J_misstion-title">
+        <input type="submit" value="提交" />
+    </form>
+    <iframe name="target" src="" frameborder="0"></iframe>
+    <script>
+        var state = 0,
+            iframe = document.createElement('iframe'),
+            loadfn = function () {
+                if (state === 1) {
+                    // var data = iframe.contentWindow.name;    // 读取 b 域名下 数据
+                    // alert(data);    // 弹出 b 域名下的数据
+                    // 移除 iframe ，回收内存
+                    // iframe.contentWindow.document.write('');
+                    // iframe.contentWindow.close();
+                    // document.body.removeChild(iframe);
+                } else if (state === 0) {
+                    // debugger;
+                    // 注：此时因跨域，无法获取到 iframe 内容
+                    // state = 1;
+                    // alert('test')
+                    //iframe.contentWindow.location = "http://localhost:8081/iframe/b-data.html?v=2";    // 设置的代理文件
+                }
+            };
+        iframe.src = 'http://localhost:8081/sdk/iframe.html';
+        if (iframe.attachEvent) {
+            iframe.attachEvent('onload', loadfn);
+        } else {
+            iframe.onload = loadfn;
+        }
+        // document.body.appendChild(iframe);
+    </script>
+    <!-- 加载 iframe -->
+</body>
+
+</html>
