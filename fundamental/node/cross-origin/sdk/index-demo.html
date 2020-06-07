@@ -44,7 +44,7 @@
             this.options = options;
             this.isInit = options.isInit || false;
             this.url = options.url;
-            this.blankUrl = options.blankUrl || 'about:blank;';
+            this.blankUrl = options.blankUrl || 'about:blank';
             this.$form = $(options.form);
             this.type = options.type || 'POST';
             this.formId = options.formId || options.form;
@@ -165,10 +165,10 @@
     <script>
         // 初始化监听
         function handleCheckIsLogin() {
-            var apiUrl = 'http://localhost:8081/sso';
+            var apiUrl = 'http://47.96.53.33:8080/user-sso/sso/check-login';
             var submitForm = SubmitByIframe.create({
                 url: apiUrl,
-                form: $('#form-'),
+                form: $('#form；屏；'),
                 formId: 'form',
                 type: 'POST',
                 iframeId: 'hidden_iframe',
