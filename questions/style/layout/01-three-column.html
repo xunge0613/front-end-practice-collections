@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>问题 1：如何实现圣杯布局</title>
+  <style>
+    .wrap-1 {
+      width: 100%;
+      display: flex;
+    }
+
+    .wrap-1 div {
+      background: black;
+      min-width: 100px;
+      height: 100px;
+    }
+
+    .wrap-1 .box-1-2 {
+      background: gray;
+      width: 100%;
+    }
+
+    .wrap-2 {
+      padding: 0 100px;
+    }
+
+    .wrap-2 div {
+      background: black;
+      width: 100px;
+      height: 100px;
+      display: inline-block;
+    }
+
+    .wrap-2 .box-2-1 {
+      position: relative;
+      margin-left: -100px;
+      float: left;
+    }
+
+    .wrap-2 .box-2-2 {
+      background: gray;
+      /* -webkit-fill-available & 100% 同样效果  */
+      width: 100%;
+      width: -webkit-fill-available;
+    }
+
+    .wrap-2 .box-2-3 {
+      position: relative;
+      margin-right: -100px;
+      float: right;
+    }
+
+    .wrap-3 {
+      font-size: 0;
+    }
+
+    .wrap-3 div {
+      background: black;
+      width: 100px;
+      display: inline-block;
+      height: 100px;
+    }
+
+    .wrap-3 .box-3-2 {
+      background: gray;
+      width: calc(100% - 200px);
+    }
+  </style>
+</head>
+
+<body>
+  <h1>问题 01：如何实现圣杯布局</h1>
+  <!-- 问题: 有三个元素，第一个与第三个宽度都为100px，中间元素占用剩余空间，怎么做到中间元素随着浏览器宽度的变化而变化 -->
+  <!-- 来源： https://juejin.im/post/5a92c23b5188257a6b06110b -->
+  <h2>方法1：flex + min-width</h2>
+  <dl>
+    <dt>优点</dt>
+    <dd>方便、优雅、易于理解</dd>
+    <dt>缺点</dt>
+    <dd>兼容性</dd>
+    <dt>说明</dt>
+    <dd>左右元素不可使用 width，必须使用 min-width，因 flex 会自动</dd>
+  </dl>
+  <div class="wrap-1">
+    <div class="box-1-1"></div>
+    <div class="box-1-2"></div>
+    <div class="box-1-3"></div>
+  </div>
+  <h2>方法2：float -margin + 100%</h2>
+  <dl>
+    <dt>优点</dt>
+    <dd>兼容性</dd>
+    <dt>缺点</dt>
+    <dd>理解成本</dd>
+  </dl>
+  <div class="wrap-2">
+    <div class="box-2-1"></div>
+    <div class="box-2-2"></div>
+    <div class="box-2-3"></div>
+  </div>
+  <h2>方法3：calc(100% - 200px)</h2>
+  <dl>
+    <dt>优点</dt>
+    <dd>方便、优雅、易于理解</dd>
+    <dt>缺点</dt>
+    <dd>兼容性</dd>
+  </dl>
+  <div class="wrap-3">
+    <div class="box-3-1"></div>
+    <div class="box-3-2"></div>
+    <div class="box-3-3"></div>
+  </div>
+</body>
+
+</html>
